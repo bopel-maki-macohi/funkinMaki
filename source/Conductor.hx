@@ -4,6 +4,8 @@ import flixel.FlxG;
 
 class Conductor extends FlxBasic
 {
+	public static var instance:Conductor;
+
 	public var bpm:Float = 150.0;
 
 	public var bps(get, never):Float;
@@ -13,10 +15,13 @@ class Conductor extends FlxBasic
 
 	public var bpsTimer:FlxTimer;
 
-	public function new(bpm:Float = 150.0)
+	public function new()
 	{
 		super();
+	}
 
+	public function setBpm(bpm:Float = 150.0)
+	{
 		this.bpm = bpm;
 	}
 

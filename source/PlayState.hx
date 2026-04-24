@@ -1,23 +1,18 @@
 package;
 
-import flixel.FlxG;
-import flixel.FlxState;
-
-class PlayState extends FlxState
+class PlayState extends ConductorState
 {
-	var conductor:Conductor;
-
 	var bf:Character;
 
 	override public function create()
 	{
 		super.create();
 
-		conductor = new Conductor(140);
+		conductor.setBpm(140.0);
 		conductor.playMusic('Test');
 		add(conductor);
 
-		bf = new Character(0,0);
+		bf = new Character(0, 0);
 		bf.screenCenter();
 		add(bf);
 	}

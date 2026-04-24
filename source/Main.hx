@@ -8,6 +8,9 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		Conductor.instance = new Conductor();
+
 		addChild(new FlxGame(0, 0, PlayState));
 	}
 }
