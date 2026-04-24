@@ -51,6 +51,8 @@ class ChartParser
 						parsing.sustains.push(i % 4);
 				}
 			}
+
+            returnData.push(parsing);
 		}
 
         trace('$songName : $returnData');
