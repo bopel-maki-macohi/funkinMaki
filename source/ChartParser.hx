@@ -4,6 +4,12 @@ import flixel.util.FlxStringUtil;
 
 using StringTools;
 
+typedef NoteData =
+{
+	notes:Array<Int>,
+	sustains:Array<Int>,
+}
+
 class ChartParser
 {
 	static public function parse(songName:String, section:Int)
@@ -12,22 +18,42 @@ class ChartParser
 
 		var csvData = FlxStringUtil.imageToCSV(AssetHandler.baseAssetTmage('data/$songName/section_$section'));
 
-		var lines:Array<String> = regex.split(csvData);
-		var baseRows:Array<String> = lines.filter(function(line) return line != "");
+		var baseRows:Array<String> = regex.split(csvData).filter(function(line) return line != "");
 
-        var newRows:Array<String> = [];
+		var newRows:Array<String> = [];
 
 		for (row in baseRows)
 		{
 			row = row.trim().replace(', ', '.');
 
-            newRows.push(row);
-            trace('"$row"');
+			newRows.push(row);
+			trace('"$row"');
 		}
 
-		csvData.replace("\n", ',');
+		var returnData:Array<NoteData> = [];
 
-		var heightInTiles = newRows.length;
-		var widthInTiles = newRows[0].split('.').length;
+		for (row in newRows)
+		{
+			var data = row.split('.');
+
+			var parsing:NoteData = {
+				notes: [],
+				sustains: [],
+			};
+
+			for (i => bit in data)
+			{
+				if (bit == '1')
+				{
+					if (i < 4)
+						parsing.notes.push(i);
+                    else
+						parsing.sustains.push(i % 4);
+				}
+			}
+		}
+
+        trace('$songName : $returnData');
+		return returnData;
 	}
 }
