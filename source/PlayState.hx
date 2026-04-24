@@ -5,13 +5,17 @@ import flixel.FlxState;
 
 class PlayState extends FlxState
 {
+	var conductor:Conductor;
+
 	var bf:Character;
 
 	override public function create()
 	{
 		super.create();
 
-		FlxG.sound.playMusic(AssetHandler.music('Test'));
+		conductor = new Conductor(140);
+		conductor.playMusic('Test');
+		add(conductor);
 
 		bf = new Character(0,0);
 		bf.screenCenter();
