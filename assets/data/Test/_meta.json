@@ -1,4 +1,6 @@
 {
     "bpm": 140.0,
-    "sectionCount": 1
+    "sectionCount": 1,
+
+    "playerSections": [0]
 }
