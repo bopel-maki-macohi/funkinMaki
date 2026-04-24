@@ -15,6 +15,7 @@ class PlayState extends ConductorState
 
 		conductor.bpm = 140.0;
 		FlxG.sound.playMusic(AssetHandler.music('Test'), 1, false);
+		ChartParser.parse('Test', 1);
 
 		bf = new Character(0, 0);
 		bf.screenCenter();
