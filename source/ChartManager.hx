@@ -20,6 +20,8 @@ typedef ChartData =
 	bpm:Float,
 
 	sections:Array<Array<SongSectionBitData>>,
+
+	?scrollspeed:Float,
 }
 
 typedef SongSectionBitData =
@@ -46,6 +48,7 @@ class ChartParser
 		var data:ChartData = {
 			bpm: metadata?.bpm ?? 150.0,
 			sections: [],
+			scrollspeed: 1,
 		};
 
 		for (i in 0...metadata?.sectionCount)

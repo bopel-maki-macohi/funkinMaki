@@ -46,7 +46,7 @@ class PlayState extends ConductorState
 
 		for (note in regularNotes)
 		{
-			note.y = note.time - conductor.time;
+			note.y = (20 - (conductor.time - note.time) * (.45 * chart.scrollspeed));
 		}
 	}
 
