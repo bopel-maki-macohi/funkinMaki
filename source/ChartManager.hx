@@ -11,6 +11,8 @@ typedef SongMetadata =
 {
 	bpm:Float,
 	sectionCount:Int,
+
+	?playerSections:Array<Int>,
 }
 
 typedef ChartData =
