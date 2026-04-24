@@ -24,6 +24,9 @@ class Conductor extends FlxBasic
 	public function setBpm(bpm:Float = 150.0)
 	{
 		this.bpm = bpm;
+
+		trace('New BPM: $bpm');
+		trace('New BPS: $bps');
 	}
 
 	public function playMusic(track:String)
