@@ -1,3 +1,4 @@
+import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 import flixel.FlxBasic;
 import flixel.FlxG;
@@ -52,6 +53,9 @@ class Conductor extends FlxBasic
 	function get_curMinute():Int
 		return Math.round(curSecond / 60);
 
+	public var onBeatSecondSignal:FlxSignal = new FlxSignal();
+	public var onBeatMinuteSignal:FlxSignal = new FlxSignal();
+
 	public function onBeatSecond()
 	{
 		curSecond++;
@@ -60,7 +64,12 @@ class Conductor extends FlxBasic
 			onBeatMinute();
 
 		trace('Music Second: $curSecond (minute: $curMinute proper second: ${curSecond % 60})');
+
+		onBeatSecondSignal.dispatch();
 	}
 
-	public function onBeatMinute() {}
+	public function onBeatMinute()
+	{
+		onBeatMinuteSignal.dispatch();
+	}
 }
