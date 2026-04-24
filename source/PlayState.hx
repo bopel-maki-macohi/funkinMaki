@@ -8,9 +8,7 @@ class PlayState extends ConductorState
 	{
 		super.create();
 
-		conductor.setBpm(140.0);
-		conductor.playMusic('Test');
-		add(conductor);
+		conductor.bpm = 140.0;
 
 		bf = new Character(0, 0);
 		bf.screenCenter();

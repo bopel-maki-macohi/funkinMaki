@@ -1,78 +1,89 @@
-import flixel.util.FlxSignal;
-import flixel.util.FlxTimer;
-import flixel.FlxBasic;
-import flixel.FlxG;
+package;
 
-class Conductor extends FlxBasic
+import flixel.FlxG;
+import flixel.util.FlxSignal.FlxTypedSignal;
+
+/**
+ * The conductor class for the game. This is what handles steps and beats and all that crap.
+ * 
+ * I gave up and just yoinked it from WTFEngine. Smite me.
+ */
+class Conductor
 {
 	public static var instance:Conductor;
 
-	public var bpm:Float = 150.0;
+	public var time:Float;
+	public var bpm(default, set):Float;
 
-	public var bps(get, never):Float;
+	public var step:Int;
+	public var beat:Int;
 
-	function get_bps():Float
-		return bpm / 60;
+	public var crotchet(get, never):Float;
+	public var quaver(get, never):Float;
 
-	public var bpsTimer:FlxTimer;
+	public var stepHit(default, null) = new FlxTypedSignal<Int->Void>();
+	public var beatHit(default, null) = new FlxTypedSignal<Int->Void>();
 
-	public function new()
+	var changeStep:Int = 0;
+	var changeTimestamp:Float = 0;
+
+	public function new() {}
+
+	public function update()
 	{
-		super();
+		final lastStep:Int = step;
+		final lastBeat:Int = beat;
+
+		step = changeStep + Math.floor((time - changeTimestamp) / quaver);
+		beat = Math.floor(step / 4);
+
+		if (lastStep != step)
+			stepHit.dispatch(step);
+		if (lastBeat != beat)
+			beatHit.dispatch(beat);
+
+		// Debug watching (for debugging purposes)
+		FlxG.watch.addQuick('time', time);
+		FlxG.watch.addQuick('bpm', bpm);
+		FlxG.watch.addQuick('step', step);
+		FlxG.watch.addQuick('beat', beat);
 	}
 
-	public function setBpm(bpm:Float = 150.0)
+	/**
+	 * Resets everything, including time, BPM, and steps.
+	 * You're going to want to run this whenever music is changed.
+	 */
+	public function reset(bpm:Float = 0)
 	{
 		this.bpm = bpm;
 
-		trace('New BPM: $bpm');
-		trace('New BPS: $bps');
+		time = 0;
+		step = 0;
+		beat = 0;
+
+		changeStep = 0;
+		changeTimestamp = 0;
 	}
 
-	public function playMusic(track:String)
+	function set_bpm(value:Float):Float
 	{
-		if (bpsTimer == null)
-			bpsTimer = new FlxTimer();
+		if (this.bpm == value)
+			return value;
+		this.bpm = value;
 
-		bpsTimer.cancel();
+		changeStep = step;
+		changeTimestamp = time;
 
-		curSecond = 0;
-
-		FlxG.sound.playMusic(AssetHandler.music(track), 1, false);
-		FlxG.sound.music.onComplete = function()
-		{
-			trace('Music done');
-			bpsTimer.cancel();
-		}
-
-		if (FlxG.sound.music != null)
-			bpsTimer.start(1, t -> onBeatSecond(), Math.round(FlxG.sound.music.length / 1000));
+		return value;
 	}
 
-	public var curSecond:Int = 0;
-
-	public var curMinute(get, never):Int;
-
-	function get_curMinute():Int
-		return Math.round(curSecond / 60);
-
-	public var onBeatSecondSignal:FlxSignal = new FlxSignal();
-	public var onBeatMinuteSignal:FlxSignal = new FlxSignal();
-
-	public function onBeatSecond()
+	inline function get_crotchet():Float
 	{
-		curSecond++;
-
-		if (curSecond > 0 && curSecond % 60 == 0)
-			onBeatMinute();
-
-		trace('Music Second: $curSecond (minute: $curMinute proper second: ${curSecond % 60})');
-
-		onBeatSecondSignal.dispatch();
+		return 60 / bpm * 1000;
 	}
 
-	public function onBeatMinute()
+	inline function get_quaver():Float
 	{
-		onBeatMinuteSignal.dispatch();
+		return crotchet / 4;
 	}
 }
