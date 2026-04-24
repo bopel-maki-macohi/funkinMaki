@@ -17,8 +17,10 @@ class PlayState extends ConductorState
 		add(bf);
 	}
 
-	override public function update(elapsed:Float)
+	override function onBeatMinute()
 	{
-		super.update(elapsed);
+		super.onBeatMinute();
+
+		bf.dance();
 	}
 }

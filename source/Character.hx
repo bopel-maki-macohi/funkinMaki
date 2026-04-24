@@ -14,5 +14,12 @@ class Character extends FlxSprite
         animation.addByPrefix('down', 'bf anim down', 24, false);
         animation.addByPrefix('up', 'bf anim up', 24, false);
         animation.addByPrefix('right', 'bf anim right', 24, false);
+
+        dance();
 	}
+
+    public function dance()
+    {
+        animation.play('idle');
+    }
 }
