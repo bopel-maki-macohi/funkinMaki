@@ -1,10 +1,13 @@
 package;
 
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.FlxG;
 
 class PlayState extends ConductorState
 {
 	var bf:Character;
+
+	var strumNotes:FlxTypedSpriteGroup<StrumNote>;
 
 	override public function create()
 	{
@@ -16,6 +19,11 @@ class PlayState extends ConductorState
 		bf = new Character(0, 0);
 		bf.screenCenter();
 		add(bf);
+
+		strumNotes = new FlxTypedSpriteGroup<StrumNote>();
+		add(strumNotes);
+
+		makeStrumNotes();
 	}
 
 	override function update(elapsed:Float)
@@ -31,5 +39,22 @@ class PlayState extends ConductorState
 		super.beatHit(beat);
 
 		bf.dance();
+	}
+
+	public function makeStrumNotes()
+	{
+		for (i in 0...8)
+		{
+			var strumNote:StrumNote = new StrumNote(20, 20);
+
+			strumNote.x += (i % 4) * strumNote.width * 2;
+
+			if (i >= 4)
+			{
+				strumNote.x += FlxG.width / 2 + strumNote.width * 2;
+			}
+
+			strumNotes.add(strumNote);
+		}
 	}
 }
