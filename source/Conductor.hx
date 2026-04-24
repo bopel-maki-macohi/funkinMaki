@@ -32,11 +32,12 @@ class Conductor extends FlxBasic
 		FlxG.sound.playMusic(AssetHandler.music(track));
 		FlxG.sound.music.onComplete = function()
 		{
-            trace('Music done');
+			trace('Music done');
 			bpsTimer.cancel();
 		}
 
-		bpsTimer.start(1, t -> onBeatSecond(), Math.round(FlxG.sound.music.length / 1000));
+		if (FlxG.sound.music != null)
+			bpsTimer.start(1, t -> onBeatSecond(), Math.round(FlxG.sound.music.length / 1000));
 	}
 
 	public var curSecond:Int = 0;
