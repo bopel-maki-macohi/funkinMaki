@@ -43,6 +43,10 @@ class PlayState extends ConductorState
 
 		conductor.time += elapsed * 1000;
 		conductor.update();
+
+		for (note in regularNotes) {
+			note.y = note.time - conductor.time;
+		}
 	}
 
 	override function beatHit(beat:Float)
