@@ -29,7 +29,12 @@ class Conductor extends FlxBasic
 
 		curSecond = 0;
 
-		FlxG.sound.playMusic(track);
+		FlxG.sound.playMusic(AssetHandler.music(track));
+		FlxG.sound.music.onComplete = function()
+		{
+            trace('Music done');
+			bpsTimer.cancel();
+		}
 
 		bpsTimer.start(1, t -> onBeatSecond(), Math.round(FlxG.sound.music.length / 1000));
 	}
@@ -48,7 +53,7 @@ class Conductor extends FlxBasic
 		if (curSecond > 0 && curSecond % 60 == 0)
 			onBeatMinute();
 
-        trace('Music Second: $curSecond (minute: $curMinute)');
+		trace('Music Second: $curSecond (minute: $curMinute proper second: ${curSecond % 60})');
 	}
 
 	public function onBeatMinute() {}
