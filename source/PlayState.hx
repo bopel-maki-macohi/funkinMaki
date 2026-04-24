@@ -18,6 +18,14 @@ class PlayState extends ConductorState
 		add(bf);
 	}
 
+	override function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		conductor.time += elapsed * 1000;
+		conductor.update();
+	}
+
 	override function beatHit(beat:Float)
 	{
 		super.beatHit(beat);
