@@ -44,7 +44,8 @@ class PlayState extends ConductorState
 		conductor.time += elapsed * 1000;
 		conductor.update();
 
-		for (note in regularNotes) {
+		for (note in regularNotes)
+		{
 			note.y = note.time - conductor.time;
 		}
 	}
@@ -77,18 +78,28 @@ class PlayState extends ConductorState
 	{
 		var t = 0.0;
 
-		for (section in chart.sections)
-			for (sectionBit in section)
+		var totalLength = 0;
+
+		for (sectionNum => section in chart.sections)
+		{
+			for (step => sectionBit in section)
 			{
-				t += conductor.quaver * 16;
+				var daStrumTime:Float = ((step * conductor.quaver) + (conductor.crotchet * 8 * totalLength)) + ((conductor.crotchet * sectionNum) * 1);
 
 				for (i in sectionBit.notes)
 				{
-					var note:Note = new Note(i, 0, 10);
-					note.time = t + i * conductor.quaver;
+					var note:Note = new Note(i, 20, 20);
+
+					note.x += (i % 4) * note.width * 2;
+					note.x += FlxG.width / 2 + note.width * 2;
+
+					note.time = daStrumTime;
 
 					regularNotes.add(note);
 				}
 			}
+
+			totalLength += Math.round((sectionNum / 4));
+		}
 	}
 }
