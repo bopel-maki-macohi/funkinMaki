@@ -1,5 +1,6 @@
 package;
 
+import ChartManager;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.FlxG;
 
@@ -9,13 +10,16 @@ class PlayState extends ConductorState
 
 	var strumNotes:FlxTypedSpriteGroup<StrumNote>;
 
+	var chart:ChartData;
+
 	override public function create()
 	{
 		super.create();
 
-		conductor.bpm = 140.0;
+		chart = ChartParser.parseSong('Test');
+
+		conductor.bpm = chart.bpm;
 		FlxG.sound.playMusic(AssetHandler.music('Test'), 1, false);
-		ChartParser.parse('Test', 1);
 
 		bf = new Character(0, 0);
 		bf.screenCenter();
