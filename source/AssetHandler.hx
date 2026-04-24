@@ -5,8 +5,11 @@ class AssetHandler
 	public static inline function assetFile(file:String)
 		return 'assets/$file';
 
+	public static inline function baseAssetTmage(file:String)
+		return assetFile('$file.png');
+
 	public static inline function image(file:String)
-		return assetFile('images/$file.png');
+		return baseAssetTmage('images/$file');
 
 	public static inline function xml(file:String)
 		return assetFile('$file.xml');
