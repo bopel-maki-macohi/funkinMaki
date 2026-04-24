@@ -13,6 +13,8 @@ class Note extends FlxSprite
 {
     public static final NOTE_SIZE:Int = 64;
 
+	public var time:Float = 0;
+
 	override public function new(dir:NoteDir, ?x:Float = 0, ?y:Float = 0)
 	{
 		super(x, y);

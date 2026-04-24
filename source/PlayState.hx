@@ -9,6 +9,7 @@ class PlayState extends ConductorState
 	var bf:Character;
 
 	var strumNotes:FlxTypedSpriteGroup<StrumNote>;
+	var regularNotes:FlxTypedSpriteGroup<Note>;
 
 	var chart:ChartData;
 
@@ -29,6 +30,11 @@ class PlayState extends ConductorState
 		add(strumNotes);
 
 		makeStrumNotes();
+
+		regularNotes = new FlxTypedSpriteGroup<Note>();
+		add(regularNotes);
+
+		makeNotes();
 	}
 
 	override function update(elapsed:Float)
@@ -61,5 +67,24 @@ class PlayState extends ConductorState
 
 			strumNotes.add(strumNote);
 		}
+	}
+
+	public function makeNotes()
+	{
+		var t = 0.0;
+
+		for (section in chart.sections)
+			for (sectionBit in section)
+			{
+				t += conductor.quaver * 16;
+
+				for (i in sectionBit.notes)
+				{
+					var note:Note = new Note(i, 0, 10);
+					note.time = t + i * conductor.quaver;
+
+					regularNotes.add(note);
+				}
+			}
 	}
 }
