@@ -14,11 +14,4 @@ class PlayState extends ConductorState
 		bf.screenCenter();
 		add(bf);
 	}
-
-	override function onBeatMinute()
-	{
-		super.onBeatMinute();
-
-		bf.dance();
-	}
 }

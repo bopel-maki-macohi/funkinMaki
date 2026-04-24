@@ -13,19 +13,19 @@ class ConductorState extends FlxState
 	{
 		super.destroy();
 
-		conductor.onBeatSecondSignal.remove(onBeatSecond);
-		conductor.onBeatMinuteSignal.remove(onBeatMinute);
+		conductor.stepHit.remove(stepHit);
+		conductor.beatHit.remove(beatHit);
 	}
 
 	override public function new()
 	{
 		super();
 
-		conductor.onBeatSecondSignal.add(onBeatSecond);
-		conductor.onBeatMinuteSignal.add(onBeatMinute);
+		conductor.stepHit.add(stepHit);
+		conductor.beatHit.add(beatHit);
 	}
 
-	function onBeatSecond() {}
+	function stepHit(step:Float) {}
 
-	function onBeatMinute() {}
+	function beatHit(beat:Float) {}
 }
