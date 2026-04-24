@@ -29,7 +29,7 @@ class Conductor extends FlxBasic
 
 		curSecond = 0;
 
-		FlxG.sound.playMusic(AssetHandler.music(track));
+		FlxG.sound.playMusic(AssetHandler.music(track), 1, false);
 		FlxG.sound.music.onComplete = function()
 		{
 			trace('Music done');
