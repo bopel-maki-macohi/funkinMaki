@@ -4,7 +4,7 @@ import flixel.util.FlxStringUtil;
 
 using StringTools;
 
-typedef NoteData =
+typedef SectionBitData =
 {
 	notes:Array<Int>,
 	sustains:Array<Int>,
@@ -30,13 +30,13 @@ class ChartParser
 			trace('"$row"');
 		}
 
-		var returnData:Array<NoteData> = [];
+		var returnData:Array<SectionBitData> = [];
 
 		for (row in newRows)
 		{
 			var data = row.split('.');
 
-			var parsing:NoteData = {
+			var parsing:SectionBitData = {
 				notes: [],
 				sustains: [],
 			};
