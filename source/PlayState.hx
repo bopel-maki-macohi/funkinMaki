@@ -80,11 +80,14 @@ class PlayState extends ConductorState
 
 		var totalLength = 0;
 
+		var step = 0;
+
 		for (sectionNum => section in chart.sections)
 		{
-			for (step => sectionBit in section)
+			for (sectionBit in section)
 			{
-				var daStrumTime:Float = ((step * conductor.quaver) + (conductor.crotchet * 8 * totalLength)) + ((conductor.crotchet * sectionNum) * 1);
+				var daStrumTime:Float = ((step * conductor.quaver) + (conductor.crotchet * 8 * totalLength)) + (conductor.crotchet * sectionNum);
+				step++;
 
 				for (i in sectionBit.notes)
 				{
