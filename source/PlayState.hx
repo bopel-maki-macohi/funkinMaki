@@ -47,6 +47,14 @@ class PlayState extends ConductorState
 		for (note in regularNotes)
 		{
 			note.y = (20 - (conductor.time - note.time) * (.45 * chart.scrollspeed));
+
+			if (note.miss)
+			{
+				// trace('u stupid');
+
+				// regularNotes.remove(note);
+				// note.destroy();
+			}
 		}
 	}
 

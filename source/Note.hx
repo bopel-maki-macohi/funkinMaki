@@ -11,7 +11,7 @@ enum abstract NoteDir(Int) from Int to Int
 
 class Note extends FlxSprite
 {
-    public static final NOTE_SIZE:Int = 64;
+	public static final NOTE_SIZE:Int = 64;
 
 	public var time:Float = 0;
 
@@ -32,5 +32,31 @@ class Note extends FlxSprite
 			case RIGHT:
 				color = 0xFF00FF;
 		}
+	}
+
+	public var canHit:Bool = false;
+	public var miss:Bool = false;
+
+	public static final SAFE_ZONE_OFFSET_MS:Float = 200;
+
+	override function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		if (time > Conductor.instance.time - SAFE_ZONE_OFFSET_MS || time < Conductor.instance.time + SAFE_ZONE_OFFSET_MS)
+		{
+			canHit = true;
+		}
+		else
+		{
+			canHit = false;
+		}
+
+		if (time < Conductor.instance.time - SAFE_ZONE_OFFSET_MS)
+		{
+			miss = true;
+		}
+
+		alpha = (miss) ? .3 : 1;
 	}
 }
