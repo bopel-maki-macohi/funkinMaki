@@ -89,6 +89,9 @@ class PlayState extends ConductorState
 				var daStrumTime:Float = ((step * conductor.quaver) + (conductor.crotchet * 8 * totalLength)) + (conductor.crotchet * sectionNum);
 				step++;
 
+				if (sectionBit == null)
+					continue;
+
 				for (i in sectionBit.notes)
 				{
 					var note:Note = new Note(i, 20, 20);

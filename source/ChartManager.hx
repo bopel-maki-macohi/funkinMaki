@@ -52,7 +52,15 @@ class ChartParser
 		};
 
 		for (i in 0...metadata?.sectionCount)
-			data.sections.push(parseSection(songName, i + 1));
+		{
+			var section = parseSection(songName, i + 1);
+
+			// if (section.filter(f -> return f != null).length == 0)
+			// 	data.sections.push([]);
+			// else
+			
+			data.sections.push(section);
+		}
 
 		trace(data);
 
@@ -99,7 +107,10 @@ class ChartParser
 				}
 			}
 
-			returnData.push(parsing);
+			if (parsing.notes.length == 0 && parsing.sustains.length == 0)
+				returnData.push(null);
+			else
+				returnData.push(parsing);
 		}
 
 		// trace('$songName : $returnData');
