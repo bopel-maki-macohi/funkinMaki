@@ -55,14 +55,8 @@ class ChartParser
 		{
 			var section = parseSection(songName, i + 1);
 
-			// if (section.filter(f -> return f != null).length == 0)
-			// 	data.sections.push([]);
-			// else
-			
 			data.sections.push(section);
 		}
-
-		trace(data);
 
 		return data;
 	}
